@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+{% block  title %}My Blogs{% endblock %}
+{%block content%}
+
+<div class="my-32 mx-auto  rounded-xl px-3 py-3 shadow-2xl w-3/4">
+    <h1 class="mx-auto font-mono font-extrabold">{{Blogger}}'s Blogs</h1>
+
+    
+
+{%for blog in user_blogs%}
+
+        <a href="{% url 'blogs:BlogPost' title=blog.title %}">
+            <div class="grid  grid-rows-4 grid-cols-6 grid-flow-col mb-2 hover:ring-black hover:ring-4 hover:pl-3 hover:duration-300 bg-gray-200 pl-1 py-2 mt-2">
+
+            {%if blog.image_small%}
+            <div class=" row-span-4 h-20">
+                <img src="{{blog.image_small.url}}" alt="Blog Image" class="h-24 rounded-lg"> 
+            </div>
+            {%endif%}
+            <div class="font-mono font-extrabold ml-0 col-span-6 overflow-hidden text-red-600">{{blog.posted_by}}</div>
+            <div class="font-mono font-extrabold ml-0 col-span-6 overflow-hidden">{{blog.title}}</div>
+            <div class="font-extralight col-span-6 row-span-2 grid-flow-dense  line-clamp-2">{{blog.summary}} </div>
+
+            </div>
+        </a>
+{% endfor %}
+
+</div>
+{%endblock%}

@@ -1,0 +1,65 @@
+{% extends "main/base.html" %}
+{% block  title %}Blogs{% endblock  %}
+{%block content%}
+
+<div class="my-auto mx-auto  rounded-xl px-3 py-3 shadow-2xl w-3/4">
+    <div class='grid grid-cols-2 grid-rows-1'>
+    <div class="place-content-start font-serif text-lg font-extrabold">Blogs</div>
+    <div class='place-content-end ml-80'>
+        <!--Blog Search Bar-->
+        <form method='post' action='.'>
+            {% csrf_token %}
+            <input type='text' name='query' placeholder='Search blogs' class='rounded-xl p-1'>
+                <button type='submit'><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+</div>
+    
+
+<!--Queried Blogs if any-->
+{% if matching_blogs%}
+<p class="mx-auto font-mono font-extrabold">Search Results</p>
+    {%for blog in matching_blogs%}
+
+    <a href={% url 'blogs:BlogPost' title=blog.title %}>
+        <div class="grid  grid-rows-4 grid-cols-6 grid-flow-col mb-2 hover:ring-black hover:ring-4 hover:pl-3 hover:duration-300 bg-gray-200 pl-1 py-2 mt-2">
+
+            {%if blog.image_small%}
+            <div class=" row-span-4 h-20">
+                <img src="{{blog.image_small.url}}" alt="Blog Image" class="h-24 rounded-lg"> 
+            </div>
+            {%endif%}
+            <div class="font-mono font-extrabold ml-0 col-span-6 overflow-hidden text-red-600">{{blog.posted_by}}</div>
+            <div class="font-mono font-extrabold ml-0 col-span-6 overflow-hidden">{{blog.title}}</div>
+            <div class="font-extralight col-span-6 row-span-2 grid-flow-dense  line-clamp-2">{{blog.summary}} </div>
+
+        </div>
+    </a>
+    {% endfor %}
+{% endif%}
+    
+
+
+
+
+<!--All blogs-->
+{%for blog in recent_blogs%}
+
+<a href="{% url 'blogs:BlogPost' title=blog.title %}">
+    <div class="grid  grid-rows-4 grid-cols-6 grid-flow-col mb-2 hover:ring-black hover:ring-4 hover:pl-3 hover:duration-300 bg-gray-200 pl-1 py-2 mt-2">
+
+        {%if blog.image_small%}
+        <div class=" row-span-4 h-20">
+            <img src="{{blog.image_small.url}}" alt="Blog Image" class="h-24 rounded-lg"> 
+        </div>
+        {%endif%}
+        <div class="font-mono font-extrabold ml-0 col-span-6 overflow-hidden text-red-600">{{blog.posted_by}}</div>
+        <div class="font-mono font-extrabold ml-0 col-span-6 overflow-hidden">{{blog.title}}</div>
+        <div class="font-extralight col-span-6 row-span-2 grid-flow-dense  line-clamp-2">{{blog.summary}} </div>
+
+    </div>
+</a>
+{% endfor %}
+
+</div>
+{%endblock%}

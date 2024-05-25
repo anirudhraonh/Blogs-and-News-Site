@@ -1,0 +1,37 @@
+{% extends "main/base.html" %}
+
+{% block title%} Registration Page{%endblock%}
+
+{%block content%} 
+<div class="bg-gray-50 my-16 mx-auto  rounded-xl px-3 py-3 shadow-2xl w-1/2 opacity-80">
+
+        <h1 class="text-3xl"><center>Create a New Account</center></h1>
+<br><br><br>
+
+        <form method="POST" action="" class="font-bold">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="username" id="username" name="username" class="bg-gray-400 rounded-lg px-1 py-1 my-2 mx-16"><br>
+            <p class="font-mono font-light">Letters, digits and @/./+/-/_ only. </p>
+
+            <label for="password1" >Password:</label>
+            <input type="password" id="password1" name="password1" class="bg-gray-400 rounded-lg px-1 py-1 my-2 mx-16"><br>
+            
+            <label for="password2" >Confirm Password:</label>
+            <input type="password" id="password2" name="password2" class="bg-gray-400 rounded-lg px-1 py-1 my-2"><br>
+
+            <p class="font-light font-mono">Your password can’t be too similar to your other personal information.</p>
+            <p class="font-mono font-light">Your password must contain at least 8 characters.</p>
+            <p class="font-mono font-light">Your password can’t be a commonly used password.</p>
+            <p class="font-mono font-light">Your password can’t be entirely numeric.</p>
+
+            {% if errors %}
+                {{errors}}
+            {%endif%}
+
+<center>
+<button type="submit" class="btn-black center-text font-mono bg-green-500 px-3 py-1 mt-3 rounded-xl my-2">Register</button>
+</center>     
+        </form>
+</div>
+ {%endblock%}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static%}
+<html>
+
+    <head>
+
+        <style type="text/tailwindcss">
+            body {
+                background-image: url('{% static 'CQGWYqb.jpg' %}');
+              }
+            .btn-black{
+                @apply hover:bg-black hover:duration-300 hover:text-white rounded-xl px-3 hover:py-3
+            }
+            .btn-gray{
+                @apply hover:bg-gray-300 hover:duration-300 hover:text-black rounded-xl  py-2 hover:px-6
+            }
+            .hover-target:hover a{
+                @apply bg-white text-black ring-2 ring-black
+            }
+            .grid-cols-4 > :hover {
+                @apply bg-green-50;
+              }
+        </style>
+
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Welcome | {%block title%}Blog site{%endblock%}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <script src="https://cdn.tailwindcss.com"></script>
+
+
+       
+    </head>
+    <body class="w-full h-screen bg-cover bg-center bg-no-repeat bg-fixed ">
+
+
+        <div>
+
+        <nav class="pt-3 font-mono shadow-lg pb-3 fixed top-0 w-full">
+            
+                <ul class="flex gap-5 px-3">
+                  <li><a class="btn-black" href="{%url 'main:Home' %}">Home</a></li>
+                  <li><a class="btn-black" href={% url 'main:News'%}>News</a></li>
+                  <li><a class="btn-black" href="{% url 'blogs:CreateBlog'%}">Post a Blog</a></li>
+                  <li><a class="btn-black" href="{% url 'blogs:BlogsPage' %}">Blogs</a></li>
+                  
+                  {%if  request.user.is_authenticated %}
+                  <li><a class="btn-black" href="{% url 'blogs:UserBlogs' request.user.id %}">My Blogs</a></li>
+                  <li><a class="btn-black  text-white bg-gray-600 py-2" href={% url 'main:logout' %}>Log out</a></li>
+                  <li class="font-sans font-medium ml-10 absolute right-2">Welcome {{user}}</li>
+                  {%else%}
+                  <li ><a class="hover:bg-red-500 hover:duration-300 hover:text-white rounded-xl px-3 py-2 hover:py-3" href={% url 'main:Reg' %}>Sign Up</a></li>
+                  <li><a class="hover:bg-green-500 hover:duration-300 hover:text-white rounded-xl px-3 py-2 hover:py-3" href={% url 'main:Login' %}>Log in </a></li>
+                  
+                  {%endif%}
+                </ul>
+              
+        </nav>
+
+    <br><br><br>
+        
+        {%block content%} 
+            <h1 class='font-mono text-3xl text-center p-4'>Welcome to the Blog site</h1>
+
+            <div class='font-mono p-10 container m-auto shadow-2xl grid grid-cols-2 grid-rows-3'>
+
+                <section class='p-4 my-2 shadow-2xl hover-target bg-opacity-50 hover:bg-opacity-100 bg-white rounded-2xl '>
+                    <h2>Ready to unleash your voice and share your story with the world? This is your chance to join the conversation! Our 'Make Your Own Blog' page is your key to unlocking a world of creative expression and self-publishing freedom. Whether you're a seasoned writer or a budding blogger, our platform is designed to help you bring your ideas to life. With our easy-to-use tools and supportive community, you'll be publishing your thoughts, experiences, and expertise in no time. So, what are you waiting for? Take the first step towards becoming a published blogger and start sharing your unique perspective with the world. Create your own blog today and let your voice be heard!</h2>
+                   <br> <a class="btn-gray bg-black text-white p-2" href="{% url 'blogs:CreateBlog'%}">Make your own Blog!</a>
+                </section>
+
+                <div></div><div></div>
+                <section class='p-4 my-2 shadow-2xl  hover-target bg-opacity-50 hover:bg-opacity-100 bg-purple-600 rounded-2xl'>
+                    <h2 class=''>Welcome to our blogosphere! This is where the conversation gets real, and the inspiration flows. Our 'Explore Blogs' page is your gateway to a treasure trove of stories, insights, and expertise from our community of passionate writers. Dive into a world of diverse perspectives, thought-provoking ideas, and relatable experiences. Whether you're looking for advice, entertainment, or simply a fresh point of view, our blogs have got you covered. So, take a deep breath, get comfortable, and start exploring – who knows what hidden gems you might discover!</h2>
+                    <br><a class="btn-gray bg-black text-white p-2" href="{% url 'blogs:BlogsPage' %}">Explore Blogs!</a>
+                </section>
+
+                <section class='p-4 my-2 shadow-2xl  hover-target bg-opacity-50 hover:bg-opacity-100 bg-blue-500 rounded-2xl'>
+                    <h2>Stay ahead of the curve with the latest news and trending topics! Our news section is your one-stop shop for the most up-to-date information on the stories that matter. From breaking news and in-depth analysis to expert opinions and thought-provoking commentary, we've got you covered. Our team of dedicated writers and contributors scour the globe to bring you the most relevant, timely, and engaging news articles, so you can stay informed and make sense of the world around you. Whether you're interested in politics, entertainment, technology, or lifestyle, our news articles are designed to keep you in the know. So, what are you waiting for? Dive into the latest news and stay informed, inspired, and ahead of the curve!</h2>
+                    <br><a class="btn-gray bg-black text-white p-2" href={% url 'main:News'%}>Read the Latest News Articles!</a>
+                </section>
+            </div>
+        {%endblock%}
+        
+    </div>
+    </body>
+</html>

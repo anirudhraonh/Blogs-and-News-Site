@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+{% block  title %}Create a Blog!{% endblock  %}
+
+{%block content%}
+
+<div class="my-32 mx-auto rounded-xl px-3 py-3 shadow-2xl w-3/4">
+    <p class="font-mono text-6xl text-center">Create and Post a Blog</p>
+    <form method='post' action='.' enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="flex flex-col gap-3 my-2">
+
+       <input type="text" name="title"  placeholder="Enter Title For Your Blog" class = "btn-gray w-full h-10 py-3 px-2" >
+       <textarea rows="10" cols="50" id="user-input" name="summary" class = "btn-gray w-full py-3 px-2" placeholder='Enter Content'></textarea>
+       <input type="file" accept="image/*" name="image_small"  placeholder="Upload image" class = "btn-gray p-2 bg-gray-50" >
+
+       
+
+        </div>
+        <button type='submit' class="btn-gray p-2 bg-green-500 font-mono">Post</button>
+    </form>
+</div>
+{%endblock%}

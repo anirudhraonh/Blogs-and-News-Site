@@ -1,0 +1,58 @@
+{% extends "main/base.html" %}
+{% block  title %}Blogs{% endblock  %}
+{%block content%}
+
+<div class="container bg-gray-50 my-32 mx-auto px-3 py-3 shadow-2xl w-3/4 text-wrap">
+
+   <div class='relative'>
+    <a href="{% url 'blogs:UserBlogs' user_id=blog.posted_by.id %}" class="mx-auto font-mono font-extrabold text-red-500 hover:underline">{{blog.posted_by}}</a>
+<!--delete blog-->
+    {% if request.user.is_authenticated and request.user == blog.posted_by %}
+        <a href="{% url 'blogs:delete' blog.title %}" class='absolute top-0 right-0 px-2 py-1 ring-4 ring-red-500 hover:bg-red-600 hover:duration-200 bg-red-200 font-mono font-bold hover:text-white'>Delete Blog</a>
+    </div>
+    {% endif%}
+
+    <h1 class="mx-auto font-mono font-extrabold text-lg text-wrap">{{blog.title}}</h1>
+
+
+<!--Display image-->
+    {%if blog.image_small%}
+    <div class="w-full h-auto rounded-lg"><img src="{{blog.image_small.url}}" alt="Blog Image"></div>
+    {% endif %}
+    <div class="font-sans text-wrap">{{blog.summary}}</div>
+</div>
+</div>
+<!--Comment Section-->
+
+    <div class="container bg-gray-700 my-4 mx-auto  rounded-xl px-3 py-3 shadow-2xl w-3/4">
+        <p class="font-sans font-extrabold text-lg text-white">Comment Section</p>
+
+        {% if request.user.is_authenticated %}
+            <form method="post" action='.' enctype='multipart/form-data' class='py-3 px-2'>
+                {% csrf_token %}
+                <textarea rows="3" id="user-input" class='py-3 px-2 w-full' name='comment' placeholder='Comment on the Blog'></textarea>
+                <input type='file' class='py-3 ' accept='image/*' name='image'><br>
+                <button type='submit' class="bg-white py-1 px-2 rounded-sm">Submit</button>
+            </form>
+        {% if error %}{{error}}{% endif %}
+        {%else%}
+        <p class='text-white'><a href="{%url 'main:Login' %}" class='hover:bg-white hover:text-black rounded-xl hover:duration-300 p-1 underline'>Log in </a>to comment on this blog.</p>
+    {% endif%}
+
+        {% for each_comment in all_comments%}
+            <div class="text-white my-2 rounded-xl px-2 relative">
+                <p class='text-red-400'>{{each_comment.comment_by}}</p>
+                <p class='absolute top-0 right-4 text-sm'>{{each_comment.comment_at}}</p>
+                {% comment %} <button style="font-size:24px;color:red;"><i class="fa fa-trash-o absolute top-0 right-0"></i></button><!--delete comment--> {% endcomment %}
+                {{each_comment.comment}}<br>
+                {% if each_comment.image%}
+                    <img src="{{each_comment.image.url}}" alt="Comment Image" class='h-28 w-28 py-1'>
+                {% endif%}
+            </div>
+            <br>
+        {%endfor%}<br>
+
+
+    </div>
+
+{%endblock%}
