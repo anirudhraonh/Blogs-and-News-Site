@@ -10,12 +10,18 @@ from newsapi.newsapi_client import NewsApiClient
 # Init
 newsapi = NewsApiClient(api_key='86a49b33733d4c4298db54ce0c0d87ea')
 
+from datetime import datetime, timedelta
+
+# Calculate the date range for the past 30 days
+to_date = datetime.now()
+from_date = to_date - timedelta(days=30)
+
 # /v2/everything
 all_articles = newsapi.get_everything(q='war',
                                     sources="times-now,quint, abc-news,al-jazeera-english,ars-technica,associated-press,axios,bbc-news,bbc-sport,bleacher-report,bloomberg,business-insider,cbs-news,cnn,crypto-coins-news,engadget,entertainment-weekly,espn,ESPN,fortune,fox-news,fox-sports,google-news,hacker-news,ign,independent,mashable,medical-news-today,msnbc,national-geographic,new-scientist,newsweek,new-york-magazine,nfl-news,nhl-news,politico,recode,reddit-r-all,reuters,salon,techcrunch,techradar,the-economist,the-hill,the-huffington-post,the-new-york-times,the-verge,the-wall-street-journal,the-washington-post,time,usa-today,vice-news,wired",
                                     domains='bbc.co.uk,techcrunch.com',
-                                    from_param='2024-04-30',
-                                    to='2024-05-25',
+                                    from_param=from_date.strftime('%Y-%m-%d'),
+                                    to=to_date.strftime('%Y-%m-%d'),
                                     language='en',
                                     sort_by='relevancy',
                                     page=2)
